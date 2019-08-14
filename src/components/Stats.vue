@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        sensor data
+        sensor stats
       </div>
       <div class="table-search-items">
         <div v-for="(item, index) in this.searchAreas" :key="index">
@@ -23,10 +23,8 @@
 
 <script>
 export default {
-  title: 'HelloWorld',
   data () {
     return {
-      msg: 'Welcome to Your Vue.js App',
       fields: [
         { key: 'user_id', sortable: true },
         { key: 'game_id', sortable: true },
@@ -121,8 +119,10 @@ export default {
       .search-area {
         width: 50%;
         display: inline-block;
-        height: 40px;
+        height: 2vw;
         font-weight: bold;
+        font-size: 1vw;
+        padding: 1vw 1vw;
         &-placeholder {
           font-weight: lighter;
         }
@@ -131,6 +131,7 @@ export default {
       .go-button {
         background-color: green;
         font-weight: bold;
+        font-size: 1vw;
       }
     }
 

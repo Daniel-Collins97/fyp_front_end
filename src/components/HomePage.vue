@@ -8,18 +8,18 @@
         </div>
       </router-link>
       <div class="secondary-section">
-        <div class="view-users">
+        <router-link to="/Users" class="view-users">
           <img class="users-image" src="../assets/users.png">
           <div class="users-area-text">
             users
           </div>
-        </div>
-        <div class="view-games">
+        </router-link>
+        <router-link to="/Games" class="view-games">
           <img class="games-image" src="../assets/games.png">
           <div class="games-area-text">
             games
           </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>

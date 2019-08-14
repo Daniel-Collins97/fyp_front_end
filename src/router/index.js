@@ -1,7 +1,10 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import HomePage from '@/components/HomePage'
+import Vue from 'vue';
+import Router from 'vue-router';
+import HomePage from '@/components/HomePage';
 import Stats from '@/components/Stats';
+import Users from '@/components/Users';
+import Games from '@/components/Games';
+import UserView from '@/components/UserView';
 
 Vue.use(Router)
 
@@ -11,13 +14,27 @@ export default new Router({
       path: '/',
       name: 'HomePage',
       component: HomePage,
-      meta: {title: 'Home'}
     },
     {
       path: '/Stats',
       name: 'Statistics',
       component: Stats,
-      meta: {title: 'Stats'}
+    },
+    {
+      path: '/Users',
+      name: 'Users',
+      component: Users
+    },
+    {
+      path: '/Games',
+      name: 'Games',
+      component: Games,
+    },
+    {
+      path: '/User-View',
+      name: 'UserView',
+      component: UserView,
+      props: route => ({ ctx: route.params.ctx }),
     }
   ]
 })

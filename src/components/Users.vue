@@ -34,6 +34,7 @@
 <script>
 import router from '../router/index.js';
 export default {
+  title: 'Users',
   data () {
     return {
       fields: [

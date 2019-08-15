@@ -32,6 +32,7 @@
 
 <script>
 export default {
+  title: 'User View',
   props: {
     ctx: {
       type: Object,

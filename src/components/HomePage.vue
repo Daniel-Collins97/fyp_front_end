@@ -25,6 +25,12 @@
   </div>
 </template>
 
+<script>
+export default {
+  title: 'Home Page',
+}
+</script>
+
 <style lang='scss' scoped>
 .main-container {
   text-align: center;

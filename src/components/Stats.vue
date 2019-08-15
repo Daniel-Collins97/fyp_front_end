@@ -4,13 +4,13 @@
       <div class="table-title">
         sensor stats
       </div>
+      <div class="table-search-input">
+        <b-form-input v-model="searchInput" class="search-area" :class="{'search-area-placeholder': !searchInput}" placeholder="Search..."/>
+      </div>
       <div class="table-search-items">
         <div v-for="(item, index) in this.searchAreas" :key="index">
           <div>
-            <b-form-input v-model="item.searchString" class="search-area" :class="{'search-area-placeholder': !item.searchString}" :placeholder="item.text" @keyup.enter="searchFunction(item.searchFunction, item)"/>
-            <span>
-              <b-button class="go-button" @click="searchFunction(item.searchFunction, item)" @keyup.enter="searchFunction(item.searchFunction, item)" tabindex="0">Go</b-button>
-            </span>
+            <b-button class="go-button" @click="searchFunction(item.searchFunction, searchInput)" @keyup.enter="searchFunction(item.searchFunction, searchInput)" tabindex="0">{{ item.text }}</b-button>
           </div>
         </div>
       </div>
@@ -22,7 +22,10 @@
 </template>
 
 <script>
+import sensorApi from '@/api/sensors.js';
+
 export default {
+  title: 'Statistics',
   data () {
     return {
       fields: [
@@ -31,56 +34,59 @@ export default {
         { key: 'impact_force', sortable: true },
         { key: 'sensor_id', sortable: true },
       ],
-      items: [
-        { user_id: 40, game_id: 2, impact_force: 7, sensor_id: 1 },
-        { user_id: 21, game_id: 3, impact_force: 11, sensor_id: 2 },
-        { user_id: 89, game_id: 2, impact_force: 23, sensor_id: 3 },
-        { user_id: 38, game_id: 1, impact_force: 2, sensor_id: 4 }
-      ],
       searchAreas: [
-        { text: 'Search Users...', searchFunction: 'users', searchString: '' },
-        { text: 'Search Games...', searchFunction: 'games', searchString: '' },
-        { text: 'Search Forces...', searchFunction: 'forces', searchString: '' },
-        { text: 'Search Sensors...', searchFunction: 'sensors', searchString: '' },
+        { text: 'Search Users', searchFunction: 'users', disabled: true },
+        { text: 'Search Games', searchFunction: 'games', disabled: true },
+        { text: 'Search Forces', searchFunction: 'forces', state: true },
+        { text: 'Search Sensors', searchFunction: 'sensors', state: true },
       ],
+      items: [],
       searchInput: '',
     }
   },
+  computed: {
+    
+  },
+  async created() {
+    let sensorData = await sensorApi.getAllSensors();
+    this.items = sensorData.data;
+    console.log('this.items:', this.items)
+  },
   methods: {
-    searchFunction(param, item) {
+    searchFunction(param, searchInput) {
       switch(param) {
         case 'users':
-          this.usersSearch(item);
+          this.usersSearch(searchInput);
           break;
 
         case 'games':
-          this.gamesSearch(item);
+          this.gamesSearch(searchInput);
           break;
 
         case 'forces':
-          this.forcesSearch(item);
+          this.forcesSearch(searchInput);
           break;
 
         case 'sensors':
-          this.sensorsSearch(item)
+          this.sensorsSearch(searchInput)
           break;
       }
     },
-    usersSearch(item) {
-      console.log('User Search String: ', item.searchString);
-      item.searchString = '';
+    usersSearch(searchInput) {
+      console.log('User Search String: ', searchInput);
+      this.searchInput = '';
     },
-    gamesSearch(item) {
-      console.log('Game Search String: ', item.searchString);
-      item.searchString = '';
+    gamesSearch(searchInput) {
+      console.log('Game Search String: ', searchInput);
+      this.searchInput = '';
     },
-    forcesSearch(item) {
-      console.log('Force Search String: ', item.searchString);
-      item.searchString = '';
+    forcesSearch(searchInput) {
+      console.log('Force Search String: ', searchInput);
+      this.searchInput = '';
     },
-    sensorsSearch(item) {
-      console.log('Sensor Search String: ', item.searchString);
-      item.searchString = '';
+    sensorsSearch(searchInput) {
+      console.log('Sensor Search String: ', searchInput);
+      this.searchInput = '';
     }
   }
 }
@@ -98,7 +104,7 @@ export default {
     height: 92vh;
     width: 80vw;
     display: grid;
-    grid-template-rows: 10vh 8vh 74vh;
+    grid-template-rows: 10vh 8vh 8vh 66vh;
     margin: 4vh 0 4vh 11vw;
 
     .table-title {
@@ -110,23 +116,29 @@ export default {
       margin-bottom: 10px;
     }
 
-    .table-search-items {
-      display: grid;
-      grid-template-columns: 25% 25% 25% 25%;
-      align-content: center;
-      text-align: center;
+    .table-search-input {
+      width: 25%;
+      margin: auto;
 
       .search-area {
-        width: 50%;
+        text-align: center;
         display: inline-block;
         height: 2vw;
         font-weight: bold;
         font-size: 1vw;
         padding: 1vw 1vw;
         &-placeholder {
+          text-align: center;
           font-weight: lighter;
         }
       }
+    }
+
+    .table-search-items {
+      display: grid;
+      grid-template-columns: 25% 25% 25% 25%;
+      align-content: center;
+      text-align: center;
 
       .go-button {
         background-color: green;

@@ -10,7 +10,7 @@
       <div class="table-search-items">
         <div v-for="(item, index) in this.searchAreas" :key="index">
           <div>
-            <b-button class="go-button" @click="searchFunction(item.searchFunction, searchInput)" @keyup.enter="searchFunction(item.searchFunction, searchInput)" tabindex="0">{{ item.text }}</b-button>
+            <b-button :disabled="searchInput === ''" class="go-button" @click="searchFunction(item.searchFunction, searchInput)" @keyup.enter="searchFunction(item.searchFunction, searchInput)" tabindex="0">{{ item.text }}</b-button>
           </div>
         </div>
       </div>

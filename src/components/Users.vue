@@ -4,13 +4,13 @@
       <div class="table-title">
         users
       </div>
+      <div class="table-search-input">
+        <b-form-input v-model="searchInput" class="search-area" :class="{'search-area-placeholder': !searchInput}" placeholder="Search..."/>
+      </div>
       <div class="table-search-items">
         <div v-for="(item, index) in this.searchAreas" :key="index">
           <div>
-            <b-form-input v-model="item.searchString" class="search-area" :class="{'search-area-placeholder': !item.searchString}" :placeholder="item.text" @keyup.enter="searchFunction(item.searchFunction, item)"/>
-            <span>
-              <b-button class="go-button" @click="searchFunction(item.searchFunction, item)" @keyup.enter="searchFunction(item.searchFunction, item)" tabindex="0">Go</b-button>
-            </span>
+            <b-button :disabled="searchInput === ''" class="go-button" @click="searchFunction(item.searchFunction, searchInput)" @keyup.enter="searchFunction(item.searchFunction, searchInput)" tabindex="0">{{ item.text }}</b-button>
           </div>
         </div>
       </div>
@@ -49,10 +49,10 @@ export default {
         { key: 'position', sortable: true },
       ],
       searchAreas: [
-        { text: 'First Name...', searchFunction: 'firstName', searchString: '' },
-        { text: 'Last Name...', searchFunction: 'lastname', searchString: '' },
-        { text: 'Positon...', searchFunction: 'position', searchString: '' },
-        { text: 'Weight...', searchFunction: 'weight', searchString: '' },
+        { text: 'Search First Name', searchFunction: 'firstName', disabled: true},
+        { text: 'Search Last Name', searchFunction: 'lastName', disabled: true},
+        { text: 'Search Positon', searchFunction: 'position', disabled: true},
+        { text: 'Search Weight', searchFunction: 'weight', disabled: true},
       ],
       items: [],
       searchInput: '',
@@ -87,21 +87,21 @@ export default {
           break;
       }
     },
-    firstNameSearch(item) {
-      console.log('First Name Search String: ', item.searchString);
-      item.searchString = '';
+    firstNameSearch(searchInput) {
+      console.log('First Name Search String: ', searchInput);
+      this.searchInput = '';
     },
-    lastNameSearch(item) {
-      console.log('Last Name Search String: ', item.searchString);
-      item.searchString = '';
+    lastNameSearch(searchInput) {
+      console.log('Last Name Search String: ', searchInput);
+      this.searchInput = '';
     },
-    positionSearch(item) {
-      console.log('Position Search String: ', item.searchString);
-      item.searchString = '';
+    positionSearch(searchInput) {
+      console.log('Position Search String: ', searchInput);
+      this.searchString = '';
     },
-    weightSearch(item) {
-      console.log('Weight Search String: ', item.searchString);
-      item.searchString = '';
+    weightSearch(searchInput) {
+      console.log('Weight Search String: ', searchInput);
+      this.searchInput = '';
     },
   }
 }
@@ -119,7 +119,7 @@ export default {
     height: 92vh;
     width: 80vw;
     display: grid;
-    grid-template-rows: 10vh 8vh 74vh;
+    grid-template-rows: 10vh 8vh 8vh 66vh;
     margin: 4vh 0 4vh 11vw;
 
     .table-title {
@@ -131,23 +131,29 @@ export default {
       margin-bottom: 10px;
     }
 
-    .table-search-items {
-      display: grid;
-      grid-template-columns: 25% 25% 25% 25%;
-      align-content: center;
-      text-align: center;
+    .table-search-input {
+      width: 25%;
+      margin: auto;
 
       .search-area {
-        width: 50%;
+        text-align: center;
         display: inline-block;
         height: 2vw;
         font-weight: bold;
         font-size: 1vw;
         padding: 1vw 1vw;
         &-placeholder {
+          text-align: center;
           font-weight: lighter;
         }
       }
+    }
+
+    .table-search-items {
+      display: grid;
+      grid-template-columns: 25% 25% 25% 25%;
+      align-content: center;
+      text-align: center;
 
       .go-button {
         background-color: green;

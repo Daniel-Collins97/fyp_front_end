@@ -28,15 +28,19 @@
         ></b-table>
       </div>
     </div>
+    <view-user-modal ref="viewUser"/>
   </div>
 </template>
 
 <script>
-import router from '../router/index.js';
+import viewUser from '@/modals/viewUser'
 import usersApi from '@/api/users.js';
 
 export default {
   title: 'Users',
+  components: {
+    'view-user-modal': viewUser,
+  },
   data () {
     return {
       fields: [
@@ -65,8 +69,10 @@ export default {
   },
   methods: {
     rowClicked(row) {
-      router.push({name: 'UserView', params: {ctx: row}});
+      console.log('this.$refs.viewUser: ', this.$refs.viewUser);
       console.log('row:', row);
+      this.$refs.viewUser.modalInfo = row;
+      this.$refs.viewUser.openModal();
     },
     searchFunction(param, item) {
       switch(param) {

@@ -33,6 +33,8 @@
 
 <script>
 import router from '../router/index.js';
+import usersApi from '@/api/users.js';
+
 export default {
   title: 'Users',
   data () {
@@ -46,21 +48,20 @@ export default {
         { key: 'weight', sortable: true },
         { key: 'position', sortable: true },
       ],
-      items: [
-        { id: 2, firstName: 'Daniel', lastName: 'Collins', age: 22, height: 185, weight: 85, position: 9 },
-        { id: 3, firstName: 'Frank', lastName: 'Collins', age: 22, height: 185, weight: 85, position: 10 },
-        { id: 4, firstName: 'Gweorge', lastName: 'Collins', age: 22, height: 185, weight: 90, position: 11 },
-        { id: 5, firstName: 'Harry', lastName: 'Collins', age: 22, height: 185, weight: 75, position: 15 },
-        { id: 6, firstName: 'Moses', lastName: 'Collins', age: 22, height: 185, weight: 185, position: 3 },
-      ],
       searchAreas: [
         { text: 'First Name...', searchFunction: 'firstName', searchString: '' },
         { text: 'Last Name...', searchFunction: 'lastname', searchString: '' },
         { text: 'Positon...', searchFunction: 'position', searchString: '' },
         { text: 'Weight...', searchFunction: 'weight', searchString: '' },
       ],
+      items: [],
       searchInput: '',
     }
+  },
+  async created() {
+    let usersData = await usersApi.getAllUsers();
+    this.items = usersData.data;
+    console.log('this.items:', this.items)
   },
   methods: {
     rowClicked(row) {

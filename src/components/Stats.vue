@@ -15,7 +15,19 @@
         </div>
       </div>
       <div class="table-data-section">
-        <b-table dark striped bordered :fixed="true" responsive="true" hover :items="items" :fields="fields"></b-table>
+        <b-table
+          dark
+          striped
+          bordered
+          :fixed="true"
+          responsive="true"
+          hover
+          :items="items"
+          :fields="fields"
+          selectable
+          @row-selected="rowSelected"
+          select-mode="single">
+        </b-table>
       </div>
     </div>
   </div>
@@ -53,6 +65,10 @@ export default {
     console.log('this.items:', this.items)
   },
   methods: {
+    rowSelected(record) {
+      let userId = record[0].user_id
+      this.$router.push({name: 'Statistics View', params: { ctx: userId}});
+    },
     searchFunction(param, searchInput) {
       switch(param) {
         case 'users':

@@ -1,19 +1,18 @@
 <template>
-  <div class="main-container">
+  <div class="main-player-container">
     <div class="table-container">
       <div class="player-profile-header">
         <img class="player-profile-image" src="../assets/player-profile.png">
       </div>
       <div class="player-info">
         <div class="player-info-titles">
-          <div class="player-info-titles-row">First Name</div>
-          <div class="player-info-titles-row">Last Name</div>
-          <div class="player-info-titles-row">Age</div>
-          <div class="player-info-titles-row">Height</div>
-          <div class="player-info-titles-row">Weight</div>
-          <div class="player-info-titles-row">Position</div>
-          <div class="player-info-titles-row">Potentially Harmful Impacts Received</div>
-          <div class="player-info-titles-row">Highest Force Received</div>
+          <div 
+            v-for="(item, index) in infoTitles"
+            :key="index"
+            :item="item"
+            class="player-info-titles-row"
+          >
+          {{ item }} </div>
         </div>
         <div class="player-info-details">
           <div class="player-info-details-row">{{ ctx.firstName }}</div>
@@ -23,7 +22,7 @@
           <div class="player-info-details-row">{{ ctx.weight }}</div>
           <div class="player-info-details-row">{{ctx.position }}</div>
           <div class="player-info-details-row">{{ harmfulImpactsMsg }}</div>
-          <div class="player-info-details-row">{{ highestForceMsg }}</div>
+          <div class="player-info-details-row">{{ highestForce }}</div>
         </div>
       </div>
     </div>
@@ -38,16 +37,19 @@ export default {
       type: Object,
       default: () => {},
     },
+    highestForce: {
+      type: Number,
+      default: 2
+    }
   },
   data() {
     return {
       harmfulImpactsMsg: 'Value to be calculated',
       highestForceMsg: 'Force Value to be calculated',
+      infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts received', 'highest force recieved']
     }
   },
-  created() {
-    console.log('ctx:', this.ctx)
-  },
+  created() {},
   methods: {
     
   }
@@ -55,9 +57,8 @@ export default {
 </script>
 
 <style lang='scss' scoped>
-.main-container {
-  padding: 10vh 0 0 35vw;
-  width: 68vw;
+.main-player-container {
+  width: 24vw;
   height: 90vh;
 
   .table-container {
@@ -73,7 +74,7 @@ export default {
       width: 100%;
 
       .player-profile-image {
-        width: 65%;
+        width: 100%;
         height: 100%;
         margin: auto;
       }
@@ -89,6 +90,7 @@ export default {
         font-weight: bold;
         display: grid;
         grid-template-rows: 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5% 12.5%;
+        text-transform: capitalize;
 
         &-row {
           border-bottom: 1px solid;

@@ -7,6 +7,7 @@ import BootstrapVue from 'bootstrap-vue'
 import Title from './mixins/title';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
+import "@/plugins/echarts";
 
 Vue.use(BootstrapVue)
 Vue.mixin(Title)

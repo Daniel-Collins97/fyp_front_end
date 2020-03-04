@@ -65,12 +65,9 @@ export default {
   async created() {
     let usersData = await usersApi.getAllUsers();
     this.items = usersData.data;
-    console.log('this.items:', this.items)
   },
   methods: {
     rowClicked(row) {
-      console.log('this.$refs.viewUser: ', this.$refs.viewUser);
-      console.log('row:', row);
       this.$refs.viewUser.modalInfo = row;
       this.$refs.viewUser.openModal();
     },

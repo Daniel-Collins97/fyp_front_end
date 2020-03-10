@@ -31,9 +31,9 @@ export default {
     return {
       highestForce: null,
       allSensorStats: [],
-      userData: null,
-      userGameData: null,
-      userSensorData: null,
+      userData: {},
+      userGameData: {},
+      userSensorData: {},
       chartOptionsBar: {
         xAxis: {
           data: [],
@@ -73,7 +73,6 @@ export default {
           show: true,
           backgroundColor: "rgba(255,255,255,0.8)",
         },
-        color: ['#127ac2'],
         textStyle: {
           color: "#fff",
           fontSize: 15
@@ -127,12 +126,11 @@ export default {
     }
   },
   async created() {
-    let userData = await usersApi.getUsersById(this.ctx);
-    let gameData = await gamesApi.getUsersGames(this.ctx)
-    let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx);
-
+    let userData = await usersApi.getUsersById(this.ctx)
     this.userData = userData.data[0];
+    let gameData = await gamesApi.getUsersGames(this.ctx)
     this.gameData = gameData.data;
+    let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx);
     this.userSensorData = sensorData.data;
 
     this.calculateLineGraphData();
@@ -157,8 +155,9 @@ export default {
           this.allSensorStats.push(sensorStat.impact_force)
         }
       });
-      let sum = this.allSensorStats.reduce((previous, current) => current += previous)
-      let avg = sum / this.allSensorStats.length;
+      this.allSensorStats = this.allSensorStats.map(Number);
+      let sum = this.allSensorStats.reduce((a, b) => a + b, 0)
+      let avg = (sum / this.allSensorStats.length).toFixed(2)
       this.chartOptionsLine.series[0].data.push(
         {
           value: avg,
@@ -166,6 +165,15 @@ export default {
           symbolSize: "10",
           itemStyle: {
             color: "red"
+          },
+          label: {
+            show: true,
+            position: 'top',
+            color: 'white',
+            fontSize: '8',
+            backgroundColor: 'red',
+            padding: 4,
+            fontWeight: 'bold'
           }
         }
       );

@@ -6,6 +6,7 @@ import Users from '@/components/Users';
 import Games from '@/components/Games';
 import UserView from '@/components/UserView';
 import StatsView from '@/components/StatsView';
+import AddUser from '@/components/AddUser';
 
 Vue.use(Router)
 
@@ -30,6 +31,11 @@ export default new Router({
       path: '/Games',
       name: 'Games',
       component: Games,
+    },
+    {
+      path: '/Add-User',
+      name: 'AddUser',
+      component: AddUser,
     },
     {
       path: '/User-View',

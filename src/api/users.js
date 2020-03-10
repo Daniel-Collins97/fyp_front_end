@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const usersUrl = 'localhost:2000';
+const usersUrl = '35.234.134.101:3000';
 const usersApi = {};
 
 usersApi.getAllUsers = () => axios.get(`http://${usersUrl}/users`,{

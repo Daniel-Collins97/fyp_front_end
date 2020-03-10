@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const gamesUrl = 'localhost:3000';
+const gamesUrl = '35.234.134.101:3001';
 const gamesApi = {};
 
 gamesApi.getAllGames = () => axios.get(`http://${gamesUrl}/games`,{

@@ -20,7 +20,7 @@
           <div class="player-info-details-row">{{ ctx.age }}</div>
           <div class="player-info-details-row">{{ ctx.height }}</div>
           <div class="player-info-details-row">{{ ctx.weight }}</div>
-          <div class="player-info-details-row">{{ctx.position }}</div>
+          <div class="player-info-details-row">{{ ctx.position }}</div>
           <div class="player-info-details-row">{{ harmfulImpactsMsg }}</div>
           <div class="player-info-details-row">{{ highestForce }}</div>
         </div>
@@ -49,7 +49,6 @@ export default {
       infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts received', 'highest force recieved']
     }
   },
-  created() {},
   methods: {
     
   }

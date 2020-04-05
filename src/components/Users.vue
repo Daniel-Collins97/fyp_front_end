@@ -79,7 +79,6 @@ export default {
       let usersData = await usersApi.getAllUsers();
       this.initialItems = usersData.data;
       this.items = usersData.data;
-      console.log("this.initialItems: ", this.initialItems);
     },
     rowClicked(row) {
       this.$refs.viewUser.modalInfo = row;

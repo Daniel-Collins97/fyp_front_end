@@ -2,7 +2,12 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        Game stats
+        <p class="table-title-text" @click="reset()">Game stats</p>
+        <router-link to="/Add-Game">
+          <div class="add-game-btn btn go-button">
+            add
+          </div>
+        </router-link>
       </div>
       <div class="table-search-input">
         <b-form-input v-model="searchInput" class="search-area" :class="{'search-area-placeholder': !searchInput}" placeholder="Search..."/>
@@ -42,21 +47,22 @@ export default {
         { text: 'Search Conditions', searchFunction: 'conditions', state: true },
       ],
       items: [],
+      initialItems: [],
       searchInput: '',
     }
   },
-  computed: {
-    
-  },
   async created() {
-    let gamesData = await gamesApi.getAllGames();
-    this.items = gamesData.data;
-    this.items.forEach((item) => {
-      item.date = moment(item.date).format('DD-MM-YYYY');
-    });
-    console.log('this.items:', this.items)
+    this.reset()
   },
   methods: {
+    async reset() {
+      let gamesData = await gamesApi.getAllGames();
+      this.initialItems = gamesData.data;
+      this.items = gamesData.data;
+      this.items.forEach((item) => {
+        item.date = moment(item.date).format('DD-MM-YYYY');
+      });
+    },
     searchFunction(param, searchInput) {
       switch(param) {
         case 'date':
@@ -77,19 +83,43 @@ export default {
       }
     },
     dateSearch(searchInput) {
-      console.log('Date Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.date.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
-    locationsSearch(searchInput) {
-      console.log('Location Search String: ', searchInput);
+    locationSearch(searchInput) {
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.location.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     oppositionSearch(searchInput) {
-      console.log('Opposition Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.opposition.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     conditionsSearch(searchInput) {
-      console.log('Conditions Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.conditions.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     }
   }
@@ -118,6 +148,22 @@ export default {
       font-weight: bold;
       padding-top: 5px;
       margin-bottom: 10px;
+
+      &-text {
+        display: inline;
+        cursor: pointer;
+      }
+    }
+
+    .add-game-btn {
+      position: absolute;
+      background-color: green;
+      font-weight: bold;
+      font-size: 1vw;
+      right: 11vw;
+      top: 5.5vh;
+      color: #fff;
+      border-color: #6c757d;
     }
 
     .table-search-input {
@@ -155,6 +201,8 @@ export default {
       background-color: white;
       opacity: 1;
       font-size: 1vw;
+      height: 95%;
+      overflow: scroll;
     }
   }
 }

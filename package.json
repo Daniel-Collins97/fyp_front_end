@@ -23,7 +23,8 @@
     "sass-loader": "7.2.0",
     "vue": "2.5.2",
     "vue-echarts": "5.0.0-beta.0",
-    "vue-router": "3.0.1"
+    "vue-router": "3.0.1",
+    "vuelidate": "0.7.5"
   },
   "devDependencies": {
     "autoprefixer": "7.1.2",

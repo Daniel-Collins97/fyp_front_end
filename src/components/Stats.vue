@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        sensor stats
+        <p class="table-title-text" @click="reset()">sensor stats</p>
       </div>
       <div class="table-search-input">
         <b-form-input v-model="searchInput" class="search-area" :class="{'search-area-placeholder': !searchInput}" placeholder="Search..."/>
@@ -53,6 +53,7 @@ export default {
         { text: 'Search Sensors', searchFunction: 'sensors', state: true },
       ],
       items: [],
+      initialItems: [],
       searchInput: '',
     }
   },
@@ -60,11 +61,14 @@ export default {
     
   },
   async created() {
-    let sensorData = await sensorApi.getAllSensors();
-    this.items = sensorData.data;
-    console.log('this.items:', this.items)
+    this.reset();
   },
   methods: {
+    async reset() {
+      let sensorData = await sensorApi.getAllSensors();
+      this.initialItems = sensorData.data;
+      this.items = sensorData.data;
+    },
     rowSelected(record) {
       let userId = record[0].user_id
       this.$router.push({name: 'Statistics View', params: { ctx: userId}});
@@ -89,19 +93,43 @@ export default {
       }
     },
     usersSearch(searchInput) {
-      console.log('User Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.user_id === Number(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     gamesSearch(searchInput) {
-      console.log('Game Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.game_id === Number(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     forcesSearch(searchInput) {
-      console.log('Force Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.impact_force.toString().includes(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     sensorsSearch(searchInput) {
-      console.log('Sensor Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.sensor_id.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     }
   }
@@ -130,6 +158,11 @@ export default {
       font-weight: bold;
       padding-top: 5px;
       margin-bottom: 10px;
+
+      &-text {
+        display: inline;
+        cursor: pointer;
+      }
     }
 
     .table-search-input {
@@ -167,6 +200,8 @@ export default {
       background-color: white;
       opacity: 1;
       font-size: 1vw;
+      height: 95%;
+      overflow: scroll;
     }
   }
 }

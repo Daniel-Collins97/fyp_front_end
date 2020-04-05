@@ -7,10 +7,11 @@ import Games from '@/components/Games';
 import UserView from '@/components/UserView';
 import StatsView from '@/components/StatsView';
 import AddUser from '@/components/AddUser';
+import AddGame from '@/components/AddGame';
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -38,6 +39,11 @@ export default new Router({
       component: AddUser,
     },
     {
+      path: '/Add-Game',
+      name: 'AddGame',
+      component: AddGame,
+    },
+    {
       path: '/User-View',
       name: 'UserView',
       component: UserView,
@@ -50,4 +56,19 @@ export default new Router({
       props: route => ({ctx: route.params.ctx }),
     }
   ]
+});
+
+router.beforeResolve((to, from, next) => {
+  if (to.name) {
+    // eslint-disable-next-line no-undef
+    NProgress.start()
+  }
+  next()
 })
+
+router.afterEach(() => {
+  // eslint-disable-next-line no-undef
+  NProgress.done()
+})
+
+export default router

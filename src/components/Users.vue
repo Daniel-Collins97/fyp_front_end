@@ -2,8 +2,8 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        users
-        <router-link to="/AddUser">
+        <p class="table-title-text" @click="reset()">users</p>
+        <router-link to="/Add-User">
           <div class="add-user-btn btn go-button">
             add
           </div>
@@ -58,32 +58,52 @@ export default {
         { key: 'position', sortable: true },
       ],
       searchAreas: [
+        { text: 'Search ID', searchFunction: 'id', disabled: true},
         { text: 'Search First Name', searchFunction: 'firstName', disabled: true},
         { text: 'Search Last Name', searchFunction: 'lastName', disabled: true},
-        { text: 'Search Positon', searchFunction: 'position', disabled: true},
+        { text: 'Search Age', searchFunction: 'age', disabled: true},
+        { text: 'Search Height', searchFunction: 'height', disabled: true},
         { text: 'Search Weight', searchFunction: 'weight', disabled: true},
+        { text: 'Search Positon', searchFunction: 'position', disabled: true},
       ],
       items: [],
+      initialItems: [],
       searchInput: '',
     }
   },
   async created() {
-    let usersData = await usersApi.getAllUsers();
-    this.items = usersData.data;
+    this.reset();
   },
   methods: {
+    async reset() {
+      let usersData = await usersApi.getAllUsers();
+      this.initialItems = usersData.data;
+      this.items = usersData.data;
+    },
     rowClicked(row) {
       this.$refs.viewUser.modalInfo = row;
       this.$refs.viewUser.openModal();
     },
     searchFunction(param, item) {
       switch(param) {
+        case 'id':
+          this.idSearch(item)
+          break;
+
         case 'firstName':
           this.firstNameSearch(item);
           break;
 
         case 'lastName':
           this.lastNameSearch(item);
+          break;
+
+        case 'age':
+          this.ageSearch(item)
+          break;
+
+        case 'height':
+          this.heightSearch(item)
           break;
 
         case 'position':
@@ -95,20 +115,74 @@ export default {
           break;
       }
     },
+    idSearch(searchInput) {
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.id.toString().includes(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
+      this.searchInput = '';
+    },
     firstNameSearch(searchInput) {
-      console.log('First Name Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.firstName.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     lastNameSearch(searchInput) {
-      console.log('Last Name Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.lastName.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
+      this.searchInput = '';
+    },
+    ageSearch(searchInput) {
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.age.toString().includes(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
+      this.searchInput = '';
+    },
+    heightSearch(searchInput) {
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.height.toString().includes(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
     positionSearch(searchInput) {
-      console.log('Position Search String: ', searchInput);
-      this.searchString = '';
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.position.toString().includes(searchInput)) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
+      this.searchInput = '';
     },
     weightSearch(searchInput) {
-      console.log('Weight Search String: ', searchInput);
+      let filteredItems = [];
+      this.initialItems.filter(item => {
+        if (item.weight.toLowerCase().includes(searchInput.toLowerCase())) {
+          filteredItems.push(item);
+        }
+      })
+      this.items = filteredItems;
       this.searchInput = '';
     },
   }
@@ -137,6 +211,11 @@ export default {
       font-weight: bold;
       padding-top: 5px;
       margin-bottom: 10px;
+      
+      &-text {
+        display: inline;
+        cursor: pointer;
+      }
     }
 
     .add-user-btn {
@@ -170,7 +249,7 @@ export default {
 
     .table-search-items {
       display: grid;
-      grid-template-columns: 25% 25% 25% 25%;
+      grid-template-columns: 14.2% 14.2% 14.2% 14.2% 14.2% 14.2% 14.2%;
       align-content: center;
       text-align: center;
 
@@ -185,6 +264,8 @@ export default {
       background-color: white;
       opacity: 1;
       font-size: 1vw;
+      height: 95%;
+      overflow: scroll;
     }
   }
 }

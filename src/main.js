@@ -8,9 +8,11 @@ import Title from './mixins/title';
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import "@/plugins/echarts";
+import Vuelidate from 'vuelidate';
 
 Vue.use(BootstrapVue)
 Vue.mixin(Title)
+Vue.use(Vuelidate);
 
 Vue.config.productionTip = false
 

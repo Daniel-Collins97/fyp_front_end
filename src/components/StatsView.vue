@@ -51,7 +51,7 @@ export default {
           nameLocation: "middle",
           nameTextStyle: {
             color: "#fff",
-            fontSize: 20
+            fontSize: 15
           },
           nameGap: 40
         },
@@ -137,21 +137,19 @@ export default {
     this.calculateBarGraphData();
 
     let calculatedSensorValues = [];
-    this.chartOptionsLine.series[0].data.forEach((item) => {
-      calculatedSensorValues.push(item.value);
-    });
+    this.userSensorData.forEach((sensorValue) => {
+      calculatedSensorValues.push(sensorValue.impact_force)
+    })
     this.highestForce = Math.max(...calculatedSensorValues)
   },
   methods: {
-    rowClicked(row) {
-      this.$refs.viewUser.modalInfo = row;
-      this.$refs.viewUser.openModal();
-    },
     calculateLineGraphData() {
       this.gameData.forEach((game) => {
-      this.chartOptionsLine.xAxis.data.push(game.opposition);
       this.userSensorData.forEach((sensorStat) => {
         if (sensorStat.game_id == game.id) {
+          if (!this.chartOptionsLine.xAxis.data.includes(game.opposition)) {
+            this.chartOptionsLine.xAxis.data.push(game.opposition);
+          }
           this.allSensorStats.push(sensorStat.impact_force)
         }
       });
@@ -180,11 +178,14 @@ export default {
       this.allSensorStats = [];
     });
     },
+    // TODO: - Integrate threshold
     calculateBarGraphData() {
       this.gameData.forEach((game) => {
-      this.chartOptionsBar.xAxis.data.push(game.opposition);
       this.userSensorData.forEach((sensorStat) => {
         if (sensorStat.game_id == game.id) {
+          if (!this.chartOptionsBar.xAxis.data.includes(game.opposition)) {
+            this.chartOptionsBar.xAxis.data.push(game.opposition);
+          }
           this.allSensorStats.push(sensorStat.impact_force)
         }
       });
@@ -192,11 +193,6 @@ export default {
       this.chartOptionsBar.series[0].data.push(
         {
           value: numOfImpacts,
-          // symbol: "diamond"
-          // symbolSize: "10",
-          // itemStyle: {
-            // color: "red"
-          // }
         }
       );
       this.allSensorStats = [];
@@ -215,6 +211,7 @@ export default {
 
   .player-info-container {
     margin: auto;
+    height: 100%;
   }
 
   .chart-wrapper {

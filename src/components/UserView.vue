@@ -1,9 +1,6 @@
 <template>
   <div class="main-player-container">
     <div class="table-container">
-      <div class="player-profile-header">
-        <img class="player-profile-image" src="../assets/player-profile.png">
-      </div>
       <div class="player-info">
         <div class="player-info-titles">
           <div 
@@ -18,11 +15,11 @@
           <div class="player-info-details-row">{{ ctx.firstName }}</div>
           <div class="player-info-details-row">{{ ctx.lastName }}</div>
           <div class="player-info-details-row">{{ ctx.age }}</div>
-          <div class="player-info-details-row">{{ ctx.height }}</div>
-          <div class="player-info-details-row">{{ ctx.weight }}</div>
+          <div class="player-info-details-row">{{ ctx.height }}cm</div>
+          <div class="player-info-details-row">{{ ctx.weight }}Kg</div>
           <div class="player-info-details-row">{{ ctx.position }}</div>
           <div class="player-info-details-row">{{ harmfulImpactsMsg }}</div>
-          <div class="player-info-details-row">{{ highestForce }}</div>
+          <div class="player-info-details-row">{{ highestForce }}G's</div>
         </div>
       </div>
     </div>
@@ -46,7 +43,7 @@ export default {
     return {
       harmfulImpactsMsg: 'Value to be calculated',
       highestForceMsg: 'Force Value to be calculated',
-      infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts received', 'highest force recieved']
+      infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts', 'highest force recieved']
     }
   },
   methods: {
@@ -57,16 +54,18 @@ export default {
 
 <style lang='scss' scoped>
 .main-player-container {
-  width: 24vw;
-  height: 90vh;
+  width: 30vw;
+  height: 80%;
 
   .table-container {
     background-color: #f7f7f7;
     display: grid;
-    grid-template-rows: 40% 60%;
     height: 100%;
     align-items: center;
     padding: 7%;
+    opacity: 0.8;
+    border-radius: 25px;
+    margin-top: 135px;
 
     .player-profile-header {
       height: 100%;
@@ -84,6 +83,7 @@ export default {
       width: 100%;
       display: grid;
       grid-template-columns: 50% 50%;
+      font-size: 13px;
 
       &-titles {
         font-weight: bold;
@@ -93,6 +93,7 @@ export default {
 
         &-row {
           border-bottom: 1px solid;
+          padding-top: 10%;
         }
       }
 
@@ -102,6 +103,8 @@ export default {
 
         &-row {
           border-left: 2px solid;
+          padding-top: 10%;
+          border-bottom: 1px solid;
         }
       }
     }

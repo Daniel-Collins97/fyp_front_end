@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const sensorsUrl = '35.234.134.101:3002';
+const sensorsUrl = '34.89.16.75:3002';
 const sensorsApi = {};
 
 sensorsApi.getAllSensors = () => axios.get(`http://${sensorsUrl}/sensors`,{

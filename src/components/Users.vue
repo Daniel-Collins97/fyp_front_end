@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        <p class="table-title-text" @click="reset()">users</p>
+        <p class="table-title-text" @click="reset()">Players</p>
         <router-link to="/Add-User">
           <div class="add-user-btn btn go-button">
             add
@@ -42,7 +42,7 @@ import viewUser from '@/modals/viewUser'
 import usersApi from '@/api/users.js';
 
 export default {
-  title: 'Users',
+  title: 'Players',
   components: {
     'view-user-modal': viewUser,
   },

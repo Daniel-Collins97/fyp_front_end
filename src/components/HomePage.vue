@@ -11,13 +11,13 @@
         <router-link to="/Users" class="view-users">
           <img class="users-image" src="../assets/users.png">
           <div class="users-area-text">
-            users
+            Players
           </div>
         </router-link>
         <router-link to="/Games" class="view-games">
           <img class="games-image" src="../assets/games.png">
           <div class="games-area-text">
-            games
+            Matches
           </div>
         </router-link>
       </div>

@@ -47,8 +47,8 @@ export default {
         { key: 'sensor_id', sortable: true },
       ],
       searchAreas: [
-        { text: 'Search Users', searchFunction: 'users', disabled: true },
-        { text: 'Search Games', searchFunction: 'games', disabled: true },
+        { text: 'Search Players', searchFunction: 'users', disabled: true },
+        { text: 'Search Matches', searchFunction: 'games', disabled: true },
         { text: 'Search Forces', searchFunction: 'forces', state: true },
         { text: 'Search Sensors', searchFunction: 'sensors', state: true },
       ],

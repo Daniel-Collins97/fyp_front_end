@@ -12,14 +12,12 @@
 import UserView from '@/components/UserView';
 
 export default {
-  title: 'User View',
+  title: 'Player View',
   components: {
     UserView
   },
   data() {
     return {
-      harmfulImpactsMsg: 'Value to be calculated',
-      highestForceMsg: 'Force Value to be calculated',
       showModal: false,
       modalInfo: null,
     }

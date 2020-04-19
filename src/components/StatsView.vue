@@ -37,7 +37,7 @@ export default {
       chartOptionsBar: {
         xAxis: {
           data: [],
-          name: "Games (Opponents)",
+          name: "Matches (Opponents)",
           nameLocation: "middle",
           nameTextStyle: {
             color: "#fff",
@@ -47,7 +47,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: "Number of Harmful Impacts Per Game",
+          name: "Number of Harmful Impacts Per Match",
           nameLocation: "middle",
           nameTextStyle: {
             color: "#fff",
@@ -81,7 +81,7 @@ export default {
       chartOptionsLine: {
         xAxis: {
           data: [],
-          name: "Games (Opponents)",
+          name: "Matches (Opponents)",
           nameLocation: "middle",
           nameTextStyle: {
             color: "#fff",

@@ -2,7 +2,7 @@
   <div class="main-container">
     <div class="table-area">
       <div class="table-title">
-        <p class="table-title-text" @click="reset()">Game stats</p>
+        <p class="table-title-text" @click="reset()">Match stats</p>
         <router-link to="/Add-Game">
           <div class="add-game-btn btn go-button">
             add
@@ -31,7 +31,7 @@ import gamesApi from '@/api/games.js';
 import moment from 'moment';
 
 export default {
-  title: 'Games',
+  title: 'Matches',
   data () {
     return {
       fields: [

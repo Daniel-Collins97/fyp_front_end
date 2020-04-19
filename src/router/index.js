@@ -25,27 +25,27 @@ const router = new Router({
     },
     {
       path: '/Users',
-      name: 'Users',
+      name: 'Players',
       component: Users
     },
     {
       path: '/Games',
-      name: 'Games',
+      name: 'Matches',
       component: Games,
     },
     {
       path: '/Add-User',
-      name: 'AddUser',
+      name: 'AddPlayer',
       component: AddUser,
     },
     {
       path: '/Add-Game',
-      name: 'AddGame',
+      name: 'AddMatch',
       component: AddGame,
     },
     {
       path: '/User-View',
-      name: 'UserView',
+      name: 'PlayerView',
       component: UserView,
       props: route => ({ ctx: route.params.ctx }),
     },

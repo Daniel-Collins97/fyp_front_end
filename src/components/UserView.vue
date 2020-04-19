@@ -18,7 +18,7 @@
           <div class="player-info-details-row">{{ ctx.height }}cm</div>
           <div class="player-info-details-row">{{ ctx.weight }}Kg</div>
           <div class="player-info-details-row">{{ ctx.position }}</div>
-          <div class="player-info-details-row">{{ harmfulImpactsMsg }}</div>
+          <div class="player-info-details-row">{{ totalHarmfulImpacts }}</div>
           <div class="player-info-details-row">{{ highestForce }}G's</div>
         </div>
       </div>
@@ -27,8 +27,12 @@
 </template>
 
 <script>
+import usersApi from '@/api/users';
+import sensorApi from '@/api/sensors';
+import gamesApi from '@/api/games';
+
 export default {
-  title: 'User View',
+  title: 'Player View',
   props: {
     ctx: {
       type: Object,
@@ -41,13 +45,30 @@ export default {
   },
   data() {
     return {
-      harmfulImpactsMsg: 'Value to be calculated',
-      highestForceMsg: 'Force Value to be calculated',
+      totalHarmfulImpacts: null,
       infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts', 'highest force recieved']
     }
   },
+  created() {
+    this.calculateHarmfulImpacts();
+  },
   methods: {
-    
+    async calculateHarmfulImpacts() {
+      let userData = await usersApi.getUsersById(this.ctx.id)
+      this.userData = userData.data[0];
+      let gameData = await gamesApi.getUsersGames(this.ctx.id)
+      this.gameData = gameData.data;
+      let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx.id);
+      this.userSensorData = sensorData.data;
+      let harmfulImpacts = [];
+
+      this.userSensorData.forEach((sensorValue) => {
+        if (sensorValue.impact_force > 65) {
+          harmfulImpacts.push(sensorValue.impact_force)
+        }
+      });
+      this.totalHarmfulImpacts = harmfulImpacts.length;
+    },
   }
 }
 </script>

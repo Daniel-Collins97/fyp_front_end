@@ -1,7 +1,8 @@
 <template>
   <div class="main-container">
     <form @submit.prevent='formHandler' name="addUserForm">
-      <h2 id="title">Add New User</h2>
+      <h2 id="title">Add New Player
+      </h2>
       <br>
       <div class="form-content">
         <div class="form-content-left">
@@ -73,7 +74,7 @@ import { required, alpha, numeric, decimal, between, maxLength } from 'vuelidate
 import usersApi from '@/api/users.js';
 
 export default {
-  title: "Add User",
+  title: "Add Player",
   data() {
     return {
       dataTable: {

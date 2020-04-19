@@ -1,14 +1,14 @@
 <template>
   <div class="main-container">
     <form @submit.prevent='formHandler' name="addGameForm">
-      <h2 id="title">Add New Game</h2>
+      <h2 id="title">Add New Match</h2>
       <br>
       <div class="form-content">
         <div class="form-content-left">
           <label class="textLabel locationLabel">Location*</label>
           <label class="textLabel oppositionLabel">Opposition*</label>
           <label class="textLabel conditionsLabel">Conditions*</label>
-          <label class="textLabel userLabel">User*</label>
+          <label class="textLabel userLabel">Player*</label>
           <button class='btn btn-cancel' type="button" value="Cancel" @click="$router.go(-1)">Cancel</button>
         </div>
         <div class="form-content-right">
@@ -41,7 +41,7 @@
               <option v-for="user in usersList" :value="user.id" :key="user.id">{{ user.firstName }} {{ user.lastName.charAt(0) }}</option>
             </select>
             <div v-show="usersErrorMessage">
-              <p class="textInputError">User is required</p>
+              <p class="textInputError">Player is required</p>
             </div>
           </div>
           <button class='btn success' type="submit">Save</button>
@@ -58,7 +58,7 @@ import usersApi from '@/api/users.js';
 import moment from 'moment';
 
 export default {
-  title: "Add Game",
+  title: "Add Match",
   data() {
     return {
       dataTable: {
@@ -79,7 +79,6 @@ export default {
       usersErrorMessage: false,
     }
   },
-  //TODO: - Update for games
   validations: {
     dataTable: {
       location: {

@@ -2,7 +2,7 @@
   <div id="app">
     <div class="header">
       <router-link to="/">
-        <img class="header-image" src="./assets/RugbySensorTechFavIcon.png">
+        <img class="header-image" src="../static/RugbySensorTech.png">
       </router-link>
     </div>
     <router-view/>

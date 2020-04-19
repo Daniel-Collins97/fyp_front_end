@@ -49,27 +49,22 @@ export default {
       infoTitles: ['first name', 'last name', 'age', 'height', 'weight', 'position', 'potentially harmful impacts', 'highest force recieved']
     }
   },
-  created() {
-    this.calculateHarmfulImpacts();
-  },
-  methods: {
-    async calculateHarmfulImpacts() {
-      let userData = await usersApi.getUsersById(this.ctx.id)
-      this.userData = userData.data[0];
-      let gameData = await gamesApi.getUsersGames(this.ctx.id)
-      this.gameData = gameData.data;
-      let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx.id);
-      this.userSensorData = sensorData.data;
-      let harmfulImpacts = [];
+  async updated() {
+    let userData = await usersApi.getUsersById(this.ctx.id)
+    this.userData = userData.data[0];
+    let gameData = await gamesApi.getUsersGames(this.ctx.id)
+    this.gameData = gameData.data;
+    let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx.id);
+    this.userSensorData = sensorData.data;
+    let harmfulImpacts = [];
 
-      this.userSensorData.forEach((sensorValue) => {
-        if (sensorValue.impact_force > 65) {
-          harmfulImpacts.push(sensorValue.impact_force)
-        }
-      });
-      this.totalHarmfulImpacts = harmfulImpacts.length;
-    },
-  }
+    this.userSensorData.forEach((sensorValue) => {
+      if (sensorValue.impact_force > 65) {
+        harmfulImpacts.push(sensorValue.impact_force)
+      }
+    });
+    this.totalHarmfulImpacts = harmfulImpacts.length;
+  },
 }
 </script>
 

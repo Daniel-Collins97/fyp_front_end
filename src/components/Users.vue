@@ -29,23 +29,17 @@
           hover
           :items="items"
           :fields="fields"
-          @row-clicked="rowClicked"
         ></b-table>
       </div>
     </div>
-    <view-user-modal ref="viewUser"/>
   </div>
 </template>
 
 <script>
-import viewUser from '@/modals/viewUser'
 import usersApi from '@/api/users.js';
 
 export default {
   title: 'Players',
-  components: {
-    'view-user-modal': viewUser,
-  },
   data () {
     return {
       fields: [
@@ -79,10 +73,6 @@ export default {
       let usersData = await usersApi.getAllUsers();
       this.initialItems = usersData.data;
       this.items = usersData.data;
-    },
-    rowClicked(row) {
-      this.$refs.viewUser.modalInfo = row;
-      this.$refs.viewUser.openModal();
     },
     searchFunction(param, item) {
       switch(param) {

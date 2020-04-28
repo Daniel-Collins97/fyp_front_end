@@ -174,12 +174,13 @@ export default {
   },
   async created() {
     let userData = await usersApi.getUsersById(this.ctx)
-    this.userData = userData.data[0];
     let gameData = await gamesApi.getUsersGames(this.ctx)
-    this.gameData = gameData.data;
     let sensorData = await sensorApi.getSensorDataFromSpecificUser(this.ctx);
-    this.userSensorData = sensorData.data;
 
+
+    this.userData = userData.data[0];
+    this.gameData = gameData.data;
+    this.userSensorData = sensorData.data;
     this.calculateLineGraphData();
     this.calculateBarGraphData();
 

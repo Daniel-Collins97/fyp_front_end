@@ -28,7 +28,8 @@ export default {
     height: 20%;
     width: 10%;
     float: left;
-    position: absolute;
+    position: fixed;
+    z-index: 1;
 
     .header-image {
       height: auto;

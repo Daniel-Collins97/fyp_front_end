@@ -3,9 +3,11 @@
     <div class="player-info-container">
       <User-View :ctx="userData" :highest-force="highestForce"></User-View>
     </div>
+    <div></div>
     <div class="chart-wrapper">
       <chart :options="chartOptionsLine"></chart>
-      <chart :options="chartOptionsBar"></chart>
+      <chart :options="chartOptionsTotalBar"></chart>
+      <chart :options="chartOptionsHarmfulBar"></chart>
     </div>
   </div>
 </template>
@@ -30,11 +32,12 @@ export default {
   data () {
     return {
       highestForce: null,
-      allSensorStats: [],
+      allSensorStatsTotal: [],
+      allSensorStatsHarmful: [],
       userData: {},
       userGameData: {},
       userSensorData: {},
-      chartOptionsBar: {
+      chartOptionsTotalBar: {
         xAxis: {
           data: [],
           name: "Matches (Opponents)",
@@ -47,7 +50,7 @@ export default {
         },
         yAxis: {
           type: 'value',
-          name: "Number of Harmful Impacts Per Match",
+          name: "N0. Impacts/Match",
           nameLocation: "middle",
           nameTextStyle: {
             color: "#fff",
@@ -62,7 +65,51 @@ export default {
           }
         ],
         title: {
-          text: 'No. of Potentially Harmful Impacts Per Match',
+          text: 'No. Impacts/Match',
+          x: 'center',
+          textStyle: {
+            fontSize: 24,
+            color: "#fff"
+          }
+        },
+        grid: {
+          show: true,
+          backgroundColor: "rgba(255,255,255,0.8)",
+        },
+        textStyle: {
+          color: "#fff",
+          fontSize: 15
+        }
+      },
+      chartOptionsHarmfulBar: {
+        xAxis: {
+          data: [],
+          name: "Matches (Opponents)",
+          nameLocation: "middle",
+          nameTextStyle: {
+            color: "#fff",
+            fontSize: 20
+          },
+          nameGap: 30
+        },
+        yAxis: {
+          type: 'value',
+          name: "No. Harmful Impacts/Match",
+          nameLocation: "middle",
+          nameTextStyle: {
+            color: "#fff",
+            fontSize: 15
+          },
+          nameGap: 40
+        },
+        series: [
+          {
+            type: 'bar',
+            data: [],
+          }
+        ],
+        title: {
+          text: 'No. Harmful Impacts/Match',
           x: 'center',
           textStyle: {
             fontSize: 24,
@@ -150,12 +197,12 @@ export default {
           if (!this.chartOptionsLine.xAxis.data.includes(game.opposition)) {
             this.chartOptionsLine.xAxis.data.push(game.opposition);
           }
-          this.allSensorStats.push(sensorStat.impact_force)
+          this.allSensorStatsTotal.push(sensorStat.impact_force)
         }
       });
-      this.allSensorStats = this.allSensorStats.map(Number);
-      let sum = this.allSensorStats.reduce((a, b) => a + b, 0)
-      let avg = (sum / this.allSensorStats.length).toFixed(2)
+      this.allSensorStatsTotal = this.allSensorStatsTotal.map(Number);
+      let sum = this.allSensorStatsTotal.reduce((a, b) => a + b, 0)
+      let avg = (sum / this.allSensorStatsTotal.length).toFixed(2)
       this.chartOptionsLine.series[0].data.push(
         {
           value: avg,
@@ -175,27 +222,40 @@ export default {
           }
         }
       );
-      this.allSensorStats = [];
+      this.allSensorStatsTotal = [];
     });
     },
-    // TODO: - Integrate threshold
     calculateBarGraphData() {
       this.gameData.forEach((game) => {
       this.userSensorData.forEach((sensorStat) => {
         if (sensorStat.game_id == game.id) {
-          if (!this.chartOptionsBar.xAxis.data.includes(game.opposition)) {
-            this.chartOptionsBar.xAxis.data.push(game.opposition);
+          if (!this.chartOptionsTotalBar.xAxis.data.includes(game.opposition)) {
+            this.chartOptionsTotalBar.xAxis.data.push(game.opposition);
           }
-          this.allSensorStats.push(sensorStat.impact_force)
+          if (!this.chartOptionsHarmfulBar.xAxis.data.includes(game.opposition)) {
+            this.chartOptionsHarmfulBar.xAxis.data.push(game.opposition);
+          }
+          if (sensorStat.impact_force >= 65) {
+            this.allSensorStatsHarmful.push(sensorStat.impact_force)
+          }
+          this.allSensorStatsTotal.push(sensorStat.impact_force)
         }
       });
-      let numOfImpacts = this.allSensorStats.length
-      this.chartOptionsBar.series[0].data.push(
+
+      let totalNumOfImpacts = this.allSensorStatsTotal.length;
+      let harmfulNumOfImpacts = this.allSensorStatsHarmful.length;
+      this.chartOptionsTotalBar.series[0].data.push(
         {
-          value: numOfImpacts,
+          value: totalNumOfImpacts,
         }
       );
-      this.allSensorStats = [];
+      this.chartOptionsHarmfulBar.series[0].data.push(
+        {
+          value: harmfulNumOfImpacts,
+        }
+      );
+      this.allSensorStatsTotal = [];
+      this.allSensorStatsHarmful = [];
     });
     }
   }
@@ -204,21 +264,24 @@ export default {
 
 <style lang='scss' scoped>
 .main-container { 
-  height: 100%;
+  height: 150%;
   width: 100%;
   display: grid;
   grid-template-columns: 35% 65%;
 
   .player-info-container {
-    margin: auto;
-    height: 100%;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    height: 66.66%;
+    position: fixed;
   }
 
   .chart-wrapper {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: 33% 33% 33%;
   }
     
     .echarts {

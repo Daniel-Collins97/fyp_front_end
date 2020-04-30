@@ -115,7 +115,7 @@ export default {
       this.dataTable.user = event.target.options[event.target.options.selectedIndex].value
       this.dataTable.user ? this.usersErrorMessage = false : this.usersErrorMessage = true;
     },
-    formHandler() {
+    async formHandler() {
       this.$v.$touch()
       if (!this.$v.$invalid && this.dataTable.conditions && this.dataTable.user) {
         const game = {};
@@ -124,7 +124,8 @@ export default {
         game.opposition = this.dataTable.opposition;
         game.conditions = this.dataTable.conditions;
         game.user_id = Number(this.dataTable.user);
-        gamesApi.createGame(game, game.user_id);
+        await gamesApi.createGame(game, game.user_id);
+        this.$router.push({name: 'Matches'});
       } else {
         if (this.dataTable.conditions === null) {
           this.conditionsErrorMessage = true;

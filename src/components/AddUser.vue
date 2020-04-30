@@ -120,7 +120,7 @@ export default {
     }
   },
   methods: {
-    formHandler() {
+    async formHandler() {
       this.$v.$touch()
       if(!this.$v.$invalid) {
         const user = {};
@@ -130,7 +130,8 @@ export default {
         user.height = Number(this.dataTable.height);
         user.weight = Number(this.dataTable.weight);
         user.position = Number(this.dataTable.position);
-        usersApi.createUser(user);
+        await usersApi.createUser(user);
+        this.$router.push({name: 'Players'});
       }
     }
   }
